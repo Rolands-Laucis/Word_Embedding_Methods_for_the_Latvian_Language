@@ -1,0 +1,11 @@
+{
+    "numpy":"pip install numpy",
+    "scipy":"pip install numpy",
+    "ufal.udpipe":"pip install ufal.udpipe",
+    "wiki_dump_reader":"pip install wiki_dump_reader",
+    "gensim":"pip install gensim",
+    "pybind11":"pip install pybind11",
+    "spaCy":"pip install -U pip setuptools wheel        pip install -U spacy",
+    "ngram2vec": "https://github.com/zhezhaoa/ngram2vec",
+    "SSG": "https://github.com/wlin12/wang2vec"
+}
