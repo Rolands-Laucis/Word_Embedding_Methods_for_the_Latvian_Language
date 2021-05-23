@@ -1,4 +1,4 @@
-#this script concatinates conll2003 NER dataset files (https://github.com/LUMII-AILab/FullStack/tree/master/NamedEntities) into 3 files (train, dev, test), split by file count - 2700, 1000, 247
+#this script parses LUMII-AILab NER dataset files (https://github.com/LUMII-AILab/FullStack/tree/master/NamedEntities) into 1 .iob file (currently TildeNER is excluded from the end file, because of SpaCy issues) and then into 3 .iob files (train, dev, test), split by sentence % 60-30-10
 #file format generated looks exactly like spaCy -c ner argument takes in this example file: 
 #https://github.com/explosion/spaCy/blob/df3444421aba611d4ad1238610ce189df158d85a/extra/example_data/ner_example_data/ner-token-per-line-conll2003.iob
 
@@ -10,8 +10,9 @@ import math
 output_file_paths_conll2003 = ["..\..\datasets\\NER\data\\"]
 output_conll2003_path = "..\..\datasets\\NER\processed\\LUMII.iob"
 
-input_file_paths_gold = ["..\..\datasets\\NER\TEST\dev_in\\", "..\..\datasets\\NER\TEST\seed_in\\", "..\..\datasets\\NER\TEST\gold_tab_sep_in\\"]
-output_gold_path = "..\..\datasets\\NER\processed\\TildeNER.iob"
+#TildeNER is currently excluded at the last statge of creating the big .iob file, because of SpaCy converter issues. So this may be ignored. This script has not been tested being run with these extra lines being commented out. TildeNER was excluded (commented out) at the final concatination stage of creating the big .iob file.
+#input_file_paths_gold = ["..\..\datasets\\NER\TEST\dev_in\\", "..\..\datasets\\NER\TEST\seed_in\\", "..\..\datasets\\NER\TEST\gold_tab_sep_in\\"]
+#output_gold_path = "..\..\datasets\\NER\processed\\TildeNER.iob"
 
 combined_iob_file_path = "..\..\datasets\\NER\processed\\ner-combined.iob"
 output_file_paths = ['..\..\datasets\\NER\\processed\\ner-combined-train.iob', '..\..\datasets\\NER\\processed\\ner-combined-dev.iob', '..\..\datasets\\NER\\processed\\ner-combined-test.iob']
@@ -46,10 +47,10 @@ def ProcessFiles(paths, f_type):
                     else:
                         out_line = ''
                         if f_type == 'gold':
-                            #so someone else before me has made a mistake in creating these files. There is supposed to be 1 word token per line. 
+                            #so someone else before me has made a mistake in creating these files. There is supposed to be 1 word token per line as per documentation. 
                             #I found places where there are 2 words in a token per line. 
                             #This took me 2.5 hours of frustration.
-                            #.gold and .conll2003 NER and IOB are not my favorite file formats.
+                            #.gold and .conll2003 NER and .IOB are not my favorite file formats.
                             #
                             #I ignore lines, where the first token (word) is actually 2 words seperated by a space.
                             if ' ' in tokens[0]:
@@ -58,7 +59,7 @@ def ProcessFiles(paths, f_type):
                         elif f_type == 'conll2003':
                             if ' ' in tokens[1]:
                                 continue
-                            out_line = " ".join([tokens[1], tokens[6]]) + "\n" #POS is tokens[3]
+                            out_line = " ".join([tokens[1], tokens[6]]) + "\n" #POS is tokens[3]; tokens[6] is BIOTAG1 which is the outter entity tag.
                         #print(out_line)
                         output.write(out_line)
 
@@ -70,9 +71,9 @@ def ProcessFiles(paths, f_type):
 #                       ---MAIN---
 
 #combine all .gold files into 1 long .iob file with only the token and IOB fields
-output = NewOutputFile(output_gold_path)
-ProcessFiles(input_file_paths_gold, 'gold')
-output.close()
+#output = NewOutputFile(output_gold_path)
+#ProcessFiles(input_file_paths_gold, 'gold')
+#output.close()
 
 #combine all .conll2003 files into 1 long .iob file with only the token and IOB fields
 output = NewOutputFile(output_conll2003_path)
