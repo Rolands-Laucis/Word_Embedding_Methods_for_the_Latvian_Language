@@ -30,4 +30,7 @@ echo ngram2vec should be done seperately
 ::Using CygWin i run the ngram_example.sh, which is located in this repo with modifications, but should be placed in /ngram2vec-master
 ::Also the .sh file expects the corpus .txt's to be in /ngram2vec-master
 
+echo training GloVe...
+echo GloVe should be done seperately
+
 echo done training models

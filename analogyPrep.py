@@ -14,13 +14,16 @@
 
 #python analogyPrep.py --model_type fasttext_original --model_file ../Models/FastText_model/fasttext_baseline_300.vec --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/lv-analogies-fasttext-baseline.txt
 
+#python analogyPrep.py --model_type glove --model_file ../Models/Glove_model/glove_5_200.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/lv-analogies-glove.txt
+#python analogyPrep.py --model_type glove --model_file ../Models/Glove_model/glove_5_200_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/lv-analogies-glove_lem.txt
+
 import argparse
 from gensim.models import Word2Vec, KeyedVectors
 
 def main():
     #CLI argument handling
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--model_type", type=str, required=True, help="[word2vec|fasttext|ngram2vec|ssg]")
+    parser.add_argument("--model_type", type=str, required=True, help="[word2vec|fasttext|ngram2vec|ssg|glove]")
     parser.add_argument("--model_file", type=str, required=True, help="Path to the .wordvectors or .txt file.")
     parser.add_argument("--dataset_file", type=str, required=True, help="Path to the dataset txt file.")
     parser.add_argument("--output_file", type=str, required=True, help="Path to the output txt file.")
@@ -42,7 +45,7 @@ def main():
     elif args.model_type == "fasttext":
         #loads gensim FastText generated .wordvectors file
         word_vectors = KeyedVectors.load(args.model_file)
-    elif args.model_type == "ssg" or args.model_type == "ngram2vec":
+    elif args.model_type == "ssg" or args.model_type == "ngram2vec" or args.model_type == "glove":
         word_vectors = KeyedVectors.load_word2vec_format(args.model_file, binary=False)
     else:
         print("model_type not supported!")

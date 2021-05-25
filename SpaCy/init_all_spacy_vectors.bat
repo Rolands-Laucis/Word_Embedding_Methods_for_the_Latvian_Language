@@ -13,4 +13,6 @@ python -m spacy init vectors lv ../../Models/Word2vec_model/word2vec_5_200_sg.tx
 python -m spacy init vectors lv ../../Models/SSG_model/ssg_5_200_sg.txt ../../Models/Spacy_tagger/ssg_5_200_sg_vectors --name lv-ssg-5-200
 python -m spacy init vectors lv ../../Models/SSG_model/ssg_5_100_sg.txt ../../Models/Spacy_tagger/ssg_5_100_sg_vectors --name lv-ssg-5-100
 python -m spacy init vectors lv ..\..\ngram2vec-master\outputs\combined_clean_corpus\ngram_ngram\sgns\ng2v_5_200_sg.output ../../Models/Spacy_tagger/ng2v_5_200_sg_vectors --name lv-ng2v-5-200
+echo NB! For glove you have to increment by 1 the first line first number of the .txt, so that spacy can convert it. Because array index issues
+python -m spacy init vectors lv ../../Models/Glove_model/glove_5_200.txt ../../Models/Spacy_tagger/glove_5_200_vectors --name lv-glove-5-200
 

@@ -12,7 +12,7 @@ def main():
     start = time.time()
     #CLI argument handling
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--model_type", type=str, required=True, help="[word2vec|fasttext_original|fasttext_gensim|ngram2vec|ssg]")
+    parser.add_argument("--model_type", type=str, required=True, help="[word2vec|fasttext_original|fasttext_gensim|ngram2vec|ssg|glove]")
     parser.add_argument("--model_file", type=str, required=True, help="Path to the .wordvectors or .txt file.")
     parser.add_argument("--dataset_file", type=str, required=True, help="Path to the dataset txt file.")
     parser.add_argument("--eval_method", type=str, required=True, help="[gensim|3cosmul|3cosadd]")
@@ -33,6 +33,7 @@ def main():
 
     #load model as a Wordvectors object
     if args.model_type == "word2vec":
+        #loads gensim word2vec generated .wordvectors file
         word_vectors = KeyedVectors.load(args.model_file)
     elif args.model_type == "fasttext_original":
         #loads fasttext.cc pretrained .vec file
@@ -40,7 +41,7 @@ def main():
     elif args.model_type == "fasttext_gensim":
         #loads gensim FastText generated .wordvectors file
         word_vectors = KeyedVectors.load(args.model_file)
-    elif args.model_type == "ssg" or args.model_type == "ngram2vec":
+    elif args.model_type == "ssg" or args.model_type == "ngram2vec" or args.model_type == "glove":
         word_vectors = KeyedVectors.load_word2vec_format(args.model_file, binary=False)
     else:
         print("model_type not supported!")
