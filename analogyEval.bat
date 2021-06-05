@@ -6,14 +6,8 @@ set win=%1
 set v_size=%2
 set eval_method=%3
 
-echo doing GloVe %win% %v_size% analogy evaluations
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10.txt --gen_output true --eval_method %eval_method% --topn 10
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%.txt --gen_output true --eval_method %eval_method% --topn 1
-echo doing GloVe analogy evaluations on lemmatized corpora
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10_lem.txt --gen_output true --eval_method %eval_method% --topn 10
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_lem.txt --gen_output true --eval_method %eval_method% --topn 1
 
-exit /b 0
+::exit /b 0
 
 echo doing word2vec %win% %v_size% analogy evaluations
 python AnalogiesTester.py --model_type word2vec --model_file ../Models/Word2vec_model/word2vec_%win%_%v_size%_sg.wordvectors --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_word2vec_%win%_%v_size%_%eval_method%_top10.txt --eval_method %eval_method% --topn 10
@@ -51,11 +45,11 @@ python AnalogiesTester.py --model_type ngram2vec --model_file ../ngram2vec-maste
 python AnalogiesTester.py --model_type ngram2vec --model_file ../ngram2vec-master/outputs/combined_clean_corpus_lem/ngram_ngram/sgns/ng2v_%win%_%v_size%_sg_lem.output --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_ng2v_%win%_%v_size%_%eval_method%_nn_lem.txt --gen_output true --eval_method %eval_method% --topn 1
 
 echo doing GloVe %win% %v_size% analogy evaluations
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10.txt --gen_output true --eval_method %eval_method% --topn 10
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%.txt --gen_output true --eval_method %eval_method% --topn 1
+python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_vec_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10.txt --gen_output true --eval_method %eval_method% --topn 10
+python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_vec_%win%_%v_size%.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%.txt --gen_output true --eval_method %eval_method% --topn 1
 echo doing GloVe analogy evaluations on lemmatized corpora
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10_lem.txt --gen_output true --eval_method %eval_method% --topn 10
-python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_lem.txt --gen_output true --eval_method %eval_method% --topn 1
+python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_vec_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_top10_lem.txt --gen_output true --eval_method %eval_method% --topn 10
+python AnalogiesTester.py --model_type glove --model_file ../Models/Glove_model/glove_vec_%win%_%v_size%_lem.txt --dataset_file ../datasets/lv-analogies.txt --output_file ../datasets/results_glove_%win%_%v_size%_%eval_method%_lem.txt --gen_output true --eval_method %eval_method% --topn 1
 
 
 
