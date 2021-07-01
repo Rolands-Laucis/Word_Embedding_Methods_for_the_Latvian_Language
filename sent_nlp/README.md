@@ -1,0 +1,1 @@
+### This folder is for everything relating to the sentiment analysis NLP task 

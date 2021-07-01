@@ -4,7 +4,7 @@
 set win=%1
 set v_size=%2
 
-::./train_and_eval_all_ner.bat
+::./train_and_eval_all_ner.bat 5 200
 
 ::python -m spacy convert ..\..\datasets\NER\processed\ner-combined-train.iob ./lumii-ner-spacy/ -l lv -n 1
 ::python -m spacy convert ..\..\datasets\NER\processed\ner-combined-dev.iob ./lumii-ner-spacy/ -l lv -n 1

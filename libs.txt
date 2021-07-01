@@ -1,0 +1,8 @@
+numpy
+scipy
+ufal.udpipe
+wiki_dump_reader
+gensim
+pybind11
+setuptools wheel
+spacy

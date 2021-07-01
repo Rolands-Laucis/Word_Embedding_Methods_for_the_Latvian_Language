@@ -4,6 +4,8 @@
 set win=%1
 set v_size=%2
 
+::./init_all_spacy_vectors.bat 5 200
+
 cd ..
 ::first fasttext and word2vec Gensim .wordvector formats need to be translated to word2vec textual .txt format
 python ModelTypeTransform.py --input_file_type wordvectors --input_file ..\Models\Word2vec_model\word2vec_%win%_%v_size%_sg.wordvectors --output_file_type txt --output_file ..\Models\Word2vec_model\word2vec_%win%_%v_size%_sg.txt

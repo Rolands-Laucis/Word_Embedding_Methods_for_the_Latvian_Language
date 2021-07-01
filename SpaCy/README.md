@@ -15,9 +15,10 @@ spacy init config -p tagger,morphologizer,parser ./configs/morfo-config.cfg
 ./configs already have this set
 
 >  For training a model, you need a .spacy format file. To generate it, you use the covert method https://spacy.io/api/cli> convert with options
->  I converted all 3 (train, dev, test) .conllu files this way from https://github.com/UniversalDependencies/UD_Latvian-LVTB
+>  I converted all 3 (train, dev, test) .conllu files this way from https://github.com/UniversalDependencies/UD_Latvian-LVTB 
+>  and https://github.com/LUMII-AILab/FullStack/tree/master/NamedEntities
 python -m spacy convert ./lvtb-pos-spacy/lv_lvtb-ud-test.conllu ./lvtb-pos-spacy/ --converter conllu
-./lvtb-pos-spacy and ./lumii-ner-spacy already have these spacy files
+./lvtb-pos-spacy and ./lumii-ner-spacy already have these spacy files for POS and NER
 
 >  I found 2 NER datasets for Latvian. 
 >  https://github.com/LUMII-AILab/FullStack/tree/master/NamedEntities of nonstandard .conll2003 format which i call LUMII NER and 
@@ -79,3 +80,8 @@ python -m spacy evaluate ..\..\Models\Spacy_tagger\word2vec_5_200_sg-ner\model-b
 >  Debug spaCy config, if results are weird or some other issues:
 
 python -m spacy debug data ./configs/config-ner.cfg --paths.train ./lumii-ner-spacy/ner-combined-train.spacy --paths.dev ./lumii-ner-spacy/ner-combined-dev.spacy --paths.vectors ..\..\Models\Spacy_tagger\ssg_5_200_sg_vectors -V
+
+
+python -m spacy debug data ./configs/config-ner.cfg --paths.train ./lumii-ner-spacy/ner-combined-train.spacy --paths.dev ./lumii-ner-spacy/ner-combined-dev.spacy -V
+
+

@@ -4,6 +4,8 @@
 set win=%1
 set v_size=%2
 
+::./train_and_eval_all_ner.bat 5 200
+
 echo training all POS models
 python -m spacy train ./configs/config-pos.cfg --output ../../Models/Spacy_tagger/ssg_%win%_%v_size%_sg-pos --paths.train ./lvtb-pos-spacy/lv_lvtb-ud-train.spacy --paths.dev ./lvtb-pos-spacy/lv_lvtb-ud-dev.spacy --paths.vectors ..\..\Models\Spacy_tagger\ssg_%win%_%v_size%_sg_vectors
 python -m spacy train ./configs/config-pos.cfg --output ../../Models/Spacy_tagger/fasttext_%win%_%v_size%_sg-pos --paths.train --paths.train ./lvtb-pos-spacy/lv_lvtb-ud-train.spacy --paths.dev ./lvtb-pos-spacy/lv_lvtb-ud-dev.spacy --paths.vectors ..\..\Models\Spacy_tagger\fasttext_%win%_%v_size%_sg_vectors
