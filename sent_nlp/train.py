@@ -1,9 +1,8 @@
-#this script trains a neural network for text classification on the dataset in ./data into sentiment classes {positive, negative, neutral}
+#this script trains a neural network for text classification on the dataset in ./data into sentiment classes like {positive, negative, neutral...}
 #cd sent_nlp
 #python train.py
 
-#CODE CREDIT: https://orbifold.net/default/embedding-and-tokenizer-in-keras/
-#https://www.youtube.com/watch?v=Y_hzMnRXjhI
+#CODE SNIPPETS CREDIT: https://keras.io/examples/nlp/pretrained_word_embeddings/
 
 #NLP libraries:
 from tensorflow.keras.preprocessing.text import Tokenizer
@@ -19,8 +18,11 @@ import numpy as np
 import json
 import re
 
-#custom scripts
+from tensorflow.python.ops.math_ops import argmax
+
+#custom scripts and global variables
 from preproc_rules import concatenated_rules
+class_names = ["POS", "NEG", "NEU", "IMP", "NOT_LV"]
 
 #--load in tweet text and their sentiments for training data from json:
 with open('./data/viksna.json', mode='r', encoding='utf-8') as f:
@@ -31,22 +33,23 @@ with open('./data/viksna.json', mode='r', encoding='utf-8') as f:
 
     for item in data['data']:
         tweet = item['text']
-        #clean the text with my preprosecing
+        #clean the tweet text with my preprosecing
         for rule in concatenated_rules:
             tweet = re.sub(rule[0], rule[1], tweet)
-
         tweets.append(tweet)
-        if item['POS'] == 1:
-            sentiments.append(2)
-        elif item['NEG'] == 1:
-            sentiments.append(0)
-        else:
-            sentiments.append(1)
+
+        #get highest value class and append its index to the list of sentiments, e.g. [0,1,1,...]
+        sent_vals = [] #= [item['POS'],item['NEG'],item['NEU'],item['IMP'],item['NOT_LV']]
+        for c_name in class_names:#support for multiple datasets, so that you can vary the class count
+            sent_vals.append(item[c_name])
+        sentiments.append(np.argmax(sent_vals))
+        #support for all classes having 0-inf counts: (later should not use to_categorical() function on the set)
+        #sentiments.append(sent_vals) #e.g. [[0,1,0,0,0,0], [0,0,2,0,0,0],...] <= this gave poor results though
     
     print("First 2 data points from dataset for debug:")
     for i in range(2):
         print("tweet: %s" % tweets[i])
-        print("sentiment: %d\n" % sentiments[i])
+        print("sentiment: %s\n" % sentiments[i])
 
     print("Gathered %d tweets" % len(tweets))
     print("Gathered %d sentiments" % len(sentiments))
@@ -64,10 +67,10 @@ training_size = round(len(tweets) * training_size_perc)
 training_tweets = np.array(tweets[0:training_size])#to numpy array so the data types match later on
 testing_tweets = np.array(tweets[training_size:])
 
-training_sent = to_categorical(np.array(sentiments[0:training_size]), 3) #to_categorical Converts a class vector (integers) to binary class matrix. I have 3 classes
-testing_sent = to_categorical(np.array(sentiments[training_size:]), 3)
-# training_sent = np.array(sentiments[0:training_size]) #to_categorical Converts a class vector (integers) to binary class matrix. I have 3 classes
-# testing_sent = np.array(sentiments[training_size:])
+training_sent = to_categorical(np.array(sentiments[0:training_size]), len(class_names)) #to_categorical Converts a class vector (integers) to binary class matrix. I have 3 classes
+testing_sent = to_categorical(np.array(sentiments[training_size:]), len(class_names))
+#training_sent = np.array(sentiments[0:training_size]) #to_categorical Converts a class vector (integers) to binary class matrix. I have 3 classes
+#testing_sent = np.array(sentiments[training_size:])
 
 #-init Tokenizer
 tokenizer = Tokenizer(
@@ -92,6 +95,10 @@ print(list(tokenizer.word_index.items())[:5])
 #-create number sequences to train on:
 training_tweets_seq = tokenizer.texts_to_sequences(training_tweets)
 testing_tweets_seq = tokenizer.texts_to_sequences(testing_tweets)
+
+#save the first 5 tweets for debug at evaluation part of code (peace of mind, that the model works)
+first_train_tweets = training_tweets[0:5]
+first_test_tweets = testing_tweets[0:5]
 #clean up memory
 del tweets
 del sentiments
@@ -171,19 +178,10 @@ model = Sequential()
 model.add(Input(shape=(44,)))
 model.add(embedding_layer)
 model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(3, activation='softmax'))#output layer = 3 classes POS, NEU, NEG
-
-
-# from tensorflow.keras import layers, Model, Input
-
-# int_sequences_input = Input(shape=(None,), dtype="int64")
-# embedded_sequences = embedding_layer(int_sequences_input)
-# x = layers.Conv1D(16, 5, activation="relu")(embedded_sequences)
-# x = layers.Dense(16, activation="relu")(x)
-# x = layers.Dropout(0.5)(x)
-# preds = layers.Dense(3, activation="softmax")(x)
-# model = Model(int_sequences_input, preds)
+model.add(Dense(len(class_names), activation='softmax'))#output layer = len(class_names). How many classes there are
 
 model.compile(
     loss='categorical_crossentropy', #sparse_categorical_crossentropy categorical_crossentropy
@@ -194,13 +192,30 @@ model.compile(
 model.summary()
 
 #--train model
-model.fit(training_tweets_seq_pad, training_sent, epochs=5, verbose=1)
+print("\nTraining model...")
+model.fit(training_tweets_seq_pad, training_sent, epochs=12, verbose=1)
 
 #-evaluate model
-#pred_train= model.predict(training_tweets_seq_pad)
+print("\nEvaluating model...")
+
+pred_train = model.predict(training_tweets_seq_pad)
 scores = model.evaluate(training_tweets_seq_pad, training_sent, verbose=1)
-print('Accuracy on training data: {}% \n Error on training data: {}'.format(scores[1], 1 - scores[1]))   
+print('Accuracy on training data: %.2f \n Error on training data: %.2f' % (scores[1], 1 - scores[1]))  
+
+# print("Predictions for first few training data tweets")
+# for i in range(len(first_train_tweets)):
+#     print("\n%s\n%s\n%s" % (first_train_tweets[i],class_names[np.argmax(pred_train[i])], pred_train[i])) 
  
-#pred_test= model.predict(testing_tweets_seq_pad)
+pred_test= model.predict(testing_tweets_seq_pad)
 scores2 = model.evaluate(testing_tweets_seq_pad, testing_sent, verbose=1)
-print('Accuracy on test data: {}% \n Error on test data: {}'.format(scores2[1], 1 - scores2[1]))   
+print('Accuracy on test data: %.2f \n Error on training data: %.2f' % (scores2[1], 1 - scores2[1])) 
+
+# print("Predictions for first few test data tweets")
+# for i in range(len(first_test_tweets)):
+#     print("\n%s\n%s\n%s" % (first_test_tweets[i],class_names[np.argmax(pred_test[i])], pred_test[i])) 
+
+#--Save the results to a local file
+with open("C:/Users/Experimenter/Desktop/BD_Code/datasets/sentiment/ssg_5_100_sent.txt", mode='w', encoding='utf-8') as output:
+    output.write('Accuracy (%%) on train data, then next line - Error on test data\n%.6f\n%.6f' % (scores[1], 1 - scores[1]))
+    output.write('\n\nAccuracy (%%) on test data, then next line - Error on test data\n%.6f\n%.6f' % (scores2[1], 1 - scores2[1]))
+print("\nSaved results to file.")
