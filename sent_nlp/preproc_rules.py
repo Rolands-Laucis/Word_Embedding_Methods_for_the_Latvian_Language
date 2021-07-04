@@ -8,11 +8,18 @@ remove_mentions = [
 ]
 
 remove_links = [
-    (r'http(.{0,100})\s?', '')
+    (r'http(.{0,100})\s?', ''),
+    (r'(url)\s?', '')
+]
+
+remove_rt = [
+    (r'(rt:)\s?', '')
 ]
 
 concatenated_rules = [
+    remove_rt[0],
     remove_links[0],
+    remove_links[1],
     seperate_punctuation[0],
     seperate_punctuation[1],
     remove_mentions[0]

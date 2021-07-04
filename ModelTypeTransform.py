@@ -7,6 +7,7 @@
 import argparse
 #import fasttext
 from gensim.models import Word2Vec, KeyedVectors
+#import gensim
 
 def main():
     #CLI arguments
