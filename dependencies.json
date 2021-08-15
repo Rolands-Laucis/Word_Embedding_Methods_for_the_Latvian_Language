@@ -7,5 +7,6 @@
     "pybind11":"pip install pybind11",
     "spaCy":"pip install -U pip setuptools wheel        pip install -U spacy",
     "ngram2vec": "https://github.com/zhezhaoa/ngram2vec",
-    "SSG": "https://github.com/wlin12/wang2vec"
+    "SSG": "https://github.com/wlin12/wang2vec",
+    "GloVe": "https://github.com/stanfordnlp/GloVe"
 }
