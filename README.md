@@ -10,7 +10,7 @@ Ngram2vec, Structure Skip-Gram and GloVe embeddings are trained with the tools f
 
 The SpaCy directory contains all source code files and readme.md instructions for building and evaluating POS and NER models using custom latvian word embeddings.
 
-There is a folder hierarchy right outside of this repository, that is used in the relative paths in all scripts. It is a bit long to explain, but mainly there are these folders ``datasets``,``Corpora``,``Cleaned_Corpora``,``Models``,``Results``, and the folder names of the various tool repositories. Check the scripts to see what folders need to be created under these.
+There is a folder hierarchy right outside of this repository, that is used in the relative paths in all scripts. It is a bit long to explain, but mainly there are these folders ``datasets``,``Corpora``,``Cleaned_Corpora``,``Models``, and the folder names of the various tool repositories. Check the scripts to see what folders need to be created under these.
 
 ## Script execution order outline
 
