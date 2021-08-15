@@ -1,3 +1,8 @@
+## Introduction
+
+All you need is the files from this repository and installed libraries. If you want to use a different training data set, then you need those files as well. Careful when reading instructions, as a few of these steps have already been performed and dont need to be repeated, it is mentioned if this is the case for a given step.
+
+## Steps to reproduce paper results
 >  This folder does NLP tasks for testing created word embeddings using python nlp SpaCy lib. For training POS and NER tagger and using them to evaluate embeddings.
 These commands contain relative paths from inside this folder, so run them from this dir.
 
@@ -51,9 +56,11 @@ python -m spacy init vectors lv ..\..\ngram2vec-master\outputs\combined_clean_co
 
 ./configs already have this set
 
->  under [training] set max_epochs = 12 for consistent results. This takes about 2-3h. Otherwise it says 0 and means unlimited epochs, bet eventually stops training past 100 epochs.
+>  under [training] set max_epochs = 12 for consistent results. This takes about 2-3h. Otherwise it says 0 and means unlimited epochs, bet eventually stops training past about 110 epochs. My guess is that it reaches a fitness threshhold.
 
 ./configs already have this set
+
+## Training
 
 >  Train the custom model to use in the spaCy nlp pipeline for tagging later.
 
@@ -71,11 +78,15 @@ python -m spacy debug data ../../Models/Spacy_tagger/ssg_5_350_pos/model-last/co
 
 python nlp_pipe.py
 
+## Evaluate
+
 >  Or use spaCy evaluate CLI command on the test data https://spacy.io/api/cli> evaluate:
 
 python -m spacy evaluate ..\..\Models\Spacy_tagger\ng2v_5_200_sg_pos\model-best ./lvtb-pos-spacy/lv_lvtb-ud-test.spacy --output ../../datasets/POS/ng2v_5_200_sg_pos.json --gold-preproc
 
 python -m spacy evaluate ..\..\Models\Spacy_tagger\word2vec_5_200_sg-ner\model-best ./lumii-ner-spacy/ner-combined-test.spacy --output ../../datasets/NER/word2vec_5_200_sg-ner.json --gold-preproc
+
+## Optional verification
 
 >  Debug spaCy config, if results are weird or some other issues:
 
