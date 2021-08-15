@@ -1,6 +1,6 @@
 ## Introduction
 
-All you need is the files from this repository and installed libraries. If you want to use a different training data set, then you need those files as well. Careful when reading instructions, as a few of these steps have already been performed and dont need to be repeated, it is mentioned if this is the case for a given step.
+All you need is the files from this repository and installed libraries. If you want to use a different training data set, then you need those files as well. Careful when reading instructions, as a few of these steps have already been performed and dont need to be repeated, it is mentioned if this is the case for a given step. There are a few .bat files for automating these relevant steps.
 
 ## Steps to reproduce paper results
 >  This folder does NLP tasks for testing created word embeddings using python nlp SpaCy lib. For training POS and NER tagger and using them to evaluate embeddings.
