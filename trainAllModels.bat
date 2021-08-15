@@ -32,5 +32,6 @@ echo ngram2vec should be done seperately
 
 echo training GloVe...
 echo GloVe should be done seperately
+::By running demo.sh in GloVe's cloned repo, that has been modified. You can just copy the glove_train.sh from this repo into there.
 
-echo done training models
+echo done training %win% %v_size% models
