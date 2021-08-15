@@ -23,6 +23,6 @@ echo evaluating all models 5 200
 call analogyEval.bat 5 200 3cosmul
 
 echo evaluating all models 5 300
-::call analogyEval.bat 5 300 3cosmul
+call analogyEval.bat 5 300 3cosmul
 
 pause
