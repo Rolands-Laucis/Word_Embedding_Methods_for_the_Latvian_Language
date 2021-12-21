@@ -17,10 +17,10 @@ There is a folder hierarchy right outside of this repository, that is used in th
 ![alt text](https://github.com/Rolands-Laucis/Word_Embedding_Methods_for_the_Latvian_Language/blob/master/Darba%20ieguld%C4%ABjuma%20diagramma.png)
 
 (Red steps)
-Firstly the corpus needs to be built, this is easy with the BuildCorpora.bat file. Check what it does.
+Firstly the corpus needs to be built, this is easy with the ``BuildCorpora.bat`` file. Check what it does.
 
 (Cyan steps)
-Then you build the Ngram2vec and GloVe embeddings separately (because i couldnt get it done with the .bat file on windows). They have their .sh files in this repo and you can copy them over to the tool's cloned repo folder and run. Check them for file paths and other settings. NB! ``glove_train.sh`` has not been tested, since the original used file was lost due to an unfortunate server termination before this dokumentation could be made.
+Then you build the Ngram2vec embeddings separately (because i couldnt get it done with the .bat file on windows). They have their .sh files in this repo and you can copy them over to the tool's cloned repo folder and run. Check them for file paths and other settings.
 Then you build the word2vec, fastText and SSG embeddings and evaluate all method embeddings on analogies with ``runAll.bat``
 
 (Green and Blue steps)
