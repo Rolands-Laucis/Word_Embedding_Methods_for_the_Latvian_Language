@@ -23,5 +23,7 @@ Firstly the corpus needs to be built, this is easy with the ``BuildCorpora.bat``
 Then you build the Ngram2vec embeddings separately (because i couldnt get it done with the .bat file on windows). They have their .sh files in this repo and you can copy them over to the tool's cloned repo folder and run. Check them for file paths and other settings.
 Then you build the word2vec, fastText and SSG embeddings and evaluate all method embeddings on analogies with ``runAll.bat``
 
+You may find traces and mentions of the GloVe method in these files and experiments, but it was later decided to not carry through with including this method in the paper.
+
 (Green and Blue steps)
 Head over to the SpaCy folder and read the readme.md instructions there for generating POS and NER models and evaluation.
