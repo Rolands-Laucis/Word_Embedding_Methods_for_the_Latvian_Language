@@ -1,5 +1,7 @@
 ## This is a source code repository for the 2021 paper "Evaluation of embedding models on Latvian NLP tasks based on publicly available corpora" by Rolands Laucis and Gints Jēkabsons at the Technical University of Riga (RTU)
 
+### [Link to open access paper](https://sciendo.com/article/10.2478/acss-2021-0016)
+
 Each python script contains a header line explaining its purpose and CLI use examples.
 There are also automation .bat files for running model training and evaluation.
 
